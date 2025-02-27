@@ -3,25 +3,28 @@
     padding: 0;
     box-sizing: border-box;
   }
-
+  
+  /* Body Styles */
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f2f2f2;
     color: #333;
     line-height: 1.6;
   }
-
+  
+  /* Header */
   header {
     background-color: #222;
     color: #fff;
     padding: 20px;
     text-align: center;
   }
-
+  
   header h1 {
     font-size: 2.5em;
   }
-
+  
+  /* Main Container */
   main {
     max-width: 800px;
     margin: 30px auto;
@@ -30,53 +33,92 @@
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
-
+  
+  /* Command List Headings */
   .command-list h2 {
-    text-align: center;
-    margin-bottom: 20px;
+    text-align: left;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    margin-left: 10px;
     color: #555;
   }
-
+  
+  /* Command List */
   .command-list ul {
     list-style: none;
+    margin-bottom: 30px;
   }
-
+  
   .command-list li {
     padding: 15px;
     border-bottom: 1px solid #eee;
     display: flex;
     flex-wrap: wrap;
+    position: relative; /* Important for tooltip positioning */
+    transition: transform 0.2s ease;  /* Added for smooth scaling */
   }
-
+  
+  .command-list li:hover {
+    transform: scale(1.05);  /* Scales up the command list item on hover */
+  }
+  
   .command-list li:last-child {
     border-bottom: none;
   }
-
+  
+  /* Command and Description */
   .command {
     font-weight: bold;
     color: #007bff;
     margin-right: 10px;
   }
-
+  
   .description {
     flex: 1;
   }
-
+  
+  /* Tooltip */
+  .tooltip {
+    position: absolute;
+    bottom: 100%; /* Position above the command item */
+    left: 10px;
+    transform: translateY(-5px);
+    background-color: #333;
+    color: #fff;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+    z-index: 10;
+  }
+  
+  /* Footer */
   footer {
     text-align: center;
     padding: 15px;
     font-size: 0.9em;
     color: #777;
   }
-
+  
+  /* Responsive Styles */
   @media (max-width: 600px) {
     header h1 {
       font-size: 2em;
     }
+  
     .command-list li {
       flex-direction: column;
     }
+  
     .command {
       margin-bottom: 5px;
+    }
+  
+    .tooltip {
+      left: 50%;
+      transform: translateX(-50%) translateY(-5px);
     }
   }
