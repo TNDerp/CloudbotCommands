@@ -42,5 +42,5 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(() => {
     currentSlide = (currentSlide + 1) % totalSlides;
     updateCarousel();
-  }, 20000);
+  }, 15000);
 });
