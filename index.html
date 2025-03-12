@@ -9,22 +9,47 @@
 <body>
   <header>
     <div class="header-container">
-      <img src="logo.png" alt="Logo" class="logo">
+      <img src="img/logo.png" alt="Logo" class="logo">
       <h1>Stream Commands</h1>
     </div>
   </header>
   <main>
     <div class="page-wrapper">
-      <aside class="sidebar-left">
-        <h2>Sidebar Left</h2>
-        <p>Put additional links, navigation, or info here.</p>
-      </aside>
+
+      <div class="sidebar-container">
+         <!-- SIDEBAR LEFT: NanoTwitchLeafs Info -->
+         <aside class="sidebar-left">
+          <div class="sidebar-content nano">
+            <!-- Replace with your actual NanoTwitchLeafs logo -->
+            <img src="img/nano.png" alt="NanoTwitchLeafs Logo" class="sidebar-logo">
+            <h2>NanoTwitchLeafs</h2>
+            <p>
+              Welcome to Derpys stream! Here you can learn about special commands
+              that let you interact with my stream. For example, you can change my lights on
+              stream by typing specific commands in the chat or simply by following!
+            </p>
+            <button class="toggle-more" data-target="#nano-more-info">More Info</button>
+            <div id="nano-more-info" class="more-info">
+              <p>
+                - Use <strong>!nano help</strong> for a full list of NanoTwitchLeafs commands.<br>
+                - Don’t forget to follow for even more interactive fun!
+              </p>
+            </div>
+          </div>
+        </aside>
+
+        <aside class="sidebar-left">
+        </aside>
+        <aside class="sidebar-left">
+        </aside>
+      </div>
+
       <section class="content">
         <section class="carousel">
           <div class="carousel-container">
             <div class="carousel-slide active">
               <div class="slide-text">
-                Highlighted Bot Command: <strong>!request</strong>
+                Highlighted Bot Command: <strong>!quote</strong>
               </div>
             </div>
             <div class="carousel-slide">
@@ -34,14 +59,10 @@
             </div>
             <div class="carousel-slide">
               <div class="slide-text">
-                Checkout <strong>!nano help</strong>
+                I'm just that <strong>guy</strong>
               </div>
             </div>
-            <div class="carousel-slide">
-              <div class="slide-text">
-                7tv is active on the stream check it with <strong>!7tv</strong>
-              </div>
-            </div>
+
           </div>
           <div class="carousel-controls">
             <button class="prev">&#10094;</button>
@@ -143,10 +164,31 @@
           </ul>
         </section>
       </section>
-      <aside class="sidebar-right">
-        <h2>Sidebar Right</h2>
-        <p>Put ads, extra info, or chat here.</p>
-      </aside>
+     
+      <div class="sidebar-container">
+        <!-- SIDEBAR RIGHT: 7TV Info -->
+        <aside class="sidebar-right">
+          <div class="sidebar-content seventv">
+            <!-- Replace with your actual 7TV logo -->
+            <img src="img/7tv.png" alt="7TV Logo" class="sidebar-logo">
+            <h2>7TV Extension</h2>
+            <p>
+              7TV is a web extension for Twitch that unlocks a wide array of additional emotes.
+              To use them, just download the extension from
+              <a href="https://7tv.app" target="_blank">7tv.app</a>.
+            </p>
+            <button class="toggle-more" data-target="#seventv-more-info">Show Emotes</button>
+            <div id="seventv-more-info" class="more-info">
+              <!-- Example GIFs (replace with real 7TV emotes if you like) -->
+            </div>
+          </div>
+        </aside>
+
+        <aside class="sidebar-right">
+        </aside>
+        <aside class="sidebar-right">
+        </aside>
+      </div>
     </div>
   </main>
   <footer>

@@ -93,7 +93,6 @@ header h1 {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
   gap: 20px;
@@ -108,15 +107,35 @@ header h1 {
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   padding: 20px;
 }
+
 /* Specific Layout */
 .sidebar-left,
 .sidebar-right {
   flex: 1;
-  max-width: 200px;
+  max-width: 600px;
+  margin-bottom: 20px;
 }
 .content {
   flex: 3;
+  max-width: 800px;
 }
+
+/* Sidebar Content */
+.sidebar-content {
+  text-align: center;
+}
+.sidebar-logo {
+  max-width: 200px;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.sidebar-container {
+  flex-direction: column;
+  max-width: 500px;
+}
+
 
 /* Command List */
 .command-list h2 {
@@ -169,6 +188,37 @@ header h1 {
   z-index: 10;
 }
 
+/* More Info Toggling */
+.more-info {
+  display: none;
+  margin-top: 10px;
+  text-align: left;
+}
+.more-info p {
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+.toggle-more {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.toggle-more:hover {
+  background: #0056b3;
+}
+
+/* 7TV Emote GIFs */
+.emote-gif {
+  width: 48px;
+  height: 48px;
+  margin: 5px;
+  border-radius: 4px;
+}
+
 /* Footer */
 footer {
   text-align: center;
@@ -201,7 +251,7 @@ footer {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 956px) {
   .sidebar-left,
   .sidebar-right {
     display: none;
