@@ -140,3 +140,39 @@ function loadSevenTvEmotes() {
 document.addEventListener('DOMContentLoaded', () => {
   loadSevenTvEmotes();
 });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  main();
+});
+
+async function fetch7TVGlobalEmotes() {
+  try {
+    const response = await fetch('https://7tv.io/v3/emote-sets/global');
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data.emotes;
+  } catch (error) {
+    console.error('Error fetching emotes:', error);
+    return [];
+  }
+}
+
+function getRandomEmote(emotes) {
+  const randomIndex = Math.floor(Math.random() * emotes.length);
+  return emotes[randomIndex];
+}
+
+async function main() {
+  const emotes = await fetch7TVGlobalEmotes();
+  if (emotes.length > 0) {
+    const randomEmote = getRandomEmote(emotes);
+    const emoteImageUrl = randomEmote.data.host.url + '/3x.webp';
+    document.getElementById('randomEmote').src = emoteImageUrl;
+  } else {
+    console.log('No emotes found.');
+  }
+}
+

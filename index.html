@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stream Commands</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="img/logo.png">
 </head>
 <body>
   <header>
@@ -24,15 +25,16 @@
             <img src="img/nano.png" alt="NanoTwitchLeafs Logo" class="sidebar-logo">
             <h2>NanoTwitchLeafs</h2>
             <p>
-              Welcome to Derpys stream! Here you can learn about special commands
-              that let you interact with my stream. For example, you can change my lights on
-              stream by typing specific commands in the chat or simply by following!
+              Welcome to Derpys stream! Our stream utilizes NanoTwitchLeafs,
+               a tool that connects Nanoleaf lights to Twitch, allowing viewers
+                to influence the lighting through chat interactions.
             </p>
             <button class="toggle-more" data-target="#nano-more-info">More Info</button>
             <div id="nano-more-info" class="more-info">
               <p>
                 - Use <strong>!nano help</strong> for a full list of NanoTwitchLeafs commands.<br>
-                - Don’t forget to follow for even more interactive fun!
+                - Don’t forget to follow for even more interactive fun! <br>
+                - Enjoy your time here and have fun interacting with the stream!
               </p>
             </div>
           </div>
@@ -47,6 +49,11 @@
       <section class="content">
         <section class="carousel">
           <div class="carousel-container">
+            <div class="carousel-slide">
+              <div class="slide-text"> 
+                <img id="randomEmote" src="" alt="Random Emote" />
+              </div>
+            </div>
             <div class="carousel-slide active">
               <div class="slide-text">
                 Highlighted Bot Command: <strong>!quote</strong>
@@ -62,7 +69,7 @@
                 I'm just that <strong>guy</strong>
               </div>
             </div>
-
+            <!-- New carousel slide for 7TV Emotes -->
           </div>
           <div class="carousel-controls">
             <button class="prev">&#10094;</button>
