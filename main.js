@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Tooltip functionality for command items
   document.querySelectorAll('.command-item').forEach(item => {
     const tooltip = document.createElement('span');
     tooltip.className = 'tooltip';
@@ -73,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 7TV Emotes
 function loadSevenTvEmotes() {
-  const userId = '01JMSRACAHM75E9497ZW05CC8B'; // Your 7TV user ID
+  const userId = '01JMSRACAHM75E9497ZW05CC8B';
   const apiEndpoint = 'https://7tv.io/v3/gql';
   const container = document.getElementById('seventv-more-info');
   container.innerHTML = '';
@@ -138,7 +137,7 @@ document.addEventListener('DOMContentLoaded', loadSevenTvEmotes);
 
 // BTTV Emotes
 function loadBttvEmotes() {
-  const channelId = '1242263396'; // Your Twitch channel ID for BTTV
+  const channelId = '1242263396';
   const apiEndpoint = `https://api.betterttv.net/3/cached/users/twitch/${channelId}`;
   const container = document.getElementById('bttv-more-info');
   container.innerHTML = '';
@@ -167,7 +166,7 @@ document.addEventListener('DOMContentLoaded', loadBttvEmotes);
 
 // FFZ Emotes
 function loadFfzEmotes() {
-  const channelName = 'tnderp'; // Your FFZ channel name
+  const channelName = 'tnderp';
   const apiEndpoint = `https://api.frankerfacez.com/v1/room/${channelName}`;
   const container = document.getElementById('ffz-more-info');
   container.innerHTML = '';
@@ -200,7 +199,7 @@ function loadFfzEmotes() {
 document.addEventListener('DOMContentLoaded', loadFfzEmotes);
 
 
-// Utility: Collect all emote images from the existing emote containers.
+
 function getAllEmoteImages() {
   const containers = [
     document.getElementById('seventv-more-info'),
@@ -222,7 +221,7 @@ function loadCarouselEmote() {
   if (allEmoteImgs.length > 0) {
     const randomIndex = Math.floor(Math.random() * allEmoteImgs.length);
     const randomEmoteImg = allEmoteImgs[randomIndex];
-    // Update the carousel image element (with id "randomEmote")
+    
     const carouselElement = document.getElementById('randomEmote');
     if (carouselElement) {
       carouselElement.src = randomEmoteImg.src;
@@ -233,15 +232,15 @@ function loadCarouselEmote() {
   }
 }
 
-// On DOMContentLoaded, set a funny loading image before updating the carousel.
+
 document.addEventListener('DOMContentLoaded', () => {
   const carouselElement = document.getElementById('randomEmote');
   if (carouselElement) {
-    // Set a funny loading GIF as the placeholder.
+    
     carouselElement.src = 'https://media1.tenor.com/m/jfmI0j5FcpAAAAAd/loading-wtf.gif';
     carouselElement.alt = 'Loading funny emote...';
   }
-  // After 2 seconds (2000ms), update the carousel with a random emote.
+  
   setTimeout(loadCarouselEmote, 2000);
 });
 
