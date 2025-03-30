@@ -69,16 +69,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// Function to fetch and display 7TV emotes using the new GraphQL endpoint and updated schema
+
+
+// 7TV Emotes
 function loadSevenTvEmotes() {
   const userId = '01JMSRACAHM75E9497ZW05CC8B'; // Your 7TV user ID
   const apiEndpoint = 'https://7tv.io/v3/gql';
   const container = document.getElementById('seventv-more-info');
-
-  // Clear any existing content
   container.innerHTML = '';
 
-  // Updated GraphQL query using the 'files' field instead of 'urls'
   const query = `
     query GetUserEmotes($id: ID!) {
       user(id: $id) {
@@ -104,63 +103,54 @@ function loadSevenTvEmotes() {
     .then(data => {
       if (data.errors) {
         console.error('GraphQL errors:', data.errors);
-        container.innerHTML = '<p>Failed to load emotes.</p>';
+        container.innerHTML = '<p>Failed to load 7TV emotes.</p>';
         return;
       }
-      // 'emote_sets' is an array; collect all emotes
       const emoteSets = data.data.user.emote_sets;
       const allEmotes = [];
       emoteSets.forEach(set => {
-        if (set.emotes && Array.isArray(set.emotes)) {
+        if (Array.isArray(set.emotes)) {
           allEmotes.push(...set.emotes);
         }
       });
-      // Loop through each emote and create an image element
       allEmotes.forEach(emote => {
         let imageUrl = '';
         if (emote.files && emote.files.length > 0) {
-          // Try to use the '4x' quality file if available, else use the first file
           const file4x = emote.files.find(file => file.quality === '4x');
           imageUrl = file4x ? file4x.url : emote.files[0].url;
+        } else {
+          imageUrl = `https://cdn.7tv.app/emote/${emote.id}/4x.avif`;
         }
         const img = document.createElement('img');
-        img.src = `https://cdn.7tv.app/emote/${emote.id}/4x.avif`; // Use the emote ID to form the URL
-        img.alt = emote.name; // Set alt text to the emote name
-        img.classList.add("emote-gif"); // Apply CSS class for styling
+        img.src = imageUrl;
+        img.alt = emote.name;
+        img.classList.add("emote-gif");
         container.appendChild(img);
       });
     })
     .catch(error => {
       console.error('Error fetching 7TV emotes:', error);
-      container.innerHTML = '<p>Failed to load emotes.</p>';
+      container.innerHTML = '<p>Failed to load 7TV emotes.</p>';
     });
 }
 
-// Call the function on page load
-document.addEventListener('DOMContentLoaded', () => {
-  loadSevenTvEmotes();
-});
+document.addEventListener('DOMContentLoaded', loadSevenTvEmotes);
 
-
+// BTTV Emotes
 function loadBttvEmotes() {
-  const channelId = '1242263396'; // Replace with your Twitch channel ID
+  const channelId = '1242263396'; // Your Twitch channel ID for BTTV
   const apiEndpoint = `https://api.betterttv.net/3/cached/users/twitch/${channelId}`;
   const container = document.getElementById('bttv-more-info');
-
   container.innerHTML = '';
 
   fetch(apiEndpoint)
     .then(response => response.json())
     .then(data => {
-      // BTTV returns two arrays: channelEmotes and sharedEmotes
-      console.log(data)
       const channelEmotes = data.channelEmotes || [];
       const sharedEmotes = data.sharedEmotes || [];
       const allEmotes = [...channelEmotes, ...sharedEmotes];
-
       allEmotes.forEach(emote => {
         const img = document.createElement('img');
-        // Construct URL using BTTV CDN – size options: 1x, 2x, 3x.
         img.src = `https://cdn.betterttv.net/emote/${emote.id}/3x`;
         img.alt = emote.code;
         img.classList.add("emote-gif");
@@ -175,18 +165,16 @@ function loadBttvEmotes() {
 
 document.addEventListener('DOMContentLoaded', loadBttvEmotes);
 
-
+// FFZ Emotes
 function loadFfzEmotes() {
-  const channelName = 'tnderp'; // Replace with your FFZ channel name
+  const channelName = 'tnderp'; // Your FFZ channel name
   const apiEndpoint = `https://api.frankerfacez.com/v1/room/${channelName}`;
   const container = document.getElementById('ffz-more-info');
-
   container.innerHTML = '';
 
   fetch(apiEndpoint)
     .then(response => response.json())
     .then(data => {
-      // Collect all emotes from every set
       let allEmotes = [];
       const sets = data.sets || {};
       for (const set in sets) {
@@ -196,10 +184,7 @@ function loadFfzEmotes() {
       }
       allEmotes.forEach(emote => {
         const img = document.createElement('img');
-        // Each emote provides URLs at different sizes in the "urls" object.
-        // Use the highest quality available (typically key "4" or fallback to "1")
-        const sizeKey = emote.urls["4"] ? "4" : (emote.urls["2"] ? "2" : "1");
-        // Construct the URL using FFZ CDN: https://cdn.frankerfacez.com/emote/{emoteID}/{size}
+        const sizeKey = (emote.urls && emote.urls["4"]) ? "4" : ((emote.urls && emote.urls["2"]) ? "2" : "1");
         img.src = `https://cdn.frankerfacez.com/emote/${emote.id}/${sizeKey}`;
         img.alt = emote.name;
         img.classList.add("emote-gif");
@@ -214,38 +199,49 @@ function loadFfzEmotes() {
 
 document.addEventListener('DOMContentLoaded', loadFfzEmotes);
 
-//Randomizer for emotes
-document.addEventListener('DOMContentLoaded', () => {
-  main();
-});
 
-async function fetch7TVGlobalEmotes() {
-  try {
-    const response = await fetch('https://7tv.io/v3/emote-sets/global');
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+// Utility: Collect all emote images from the existing emote containers.
+function getAllEmoteImages() {
+  const containers = [
+    document.getElementById('seventv-more-info'),
+    document.getElementById('bttv-more-info'),
+    document.getElementById('ffz-more-info')
+  ];
+  let images = [];
+  containers.forEach(container => {
+    if (container) {
+      images.push(...container.querySelectorAll('img'));
     }
-    const data = await response.json();
-    return data.emotes;
-  } catch (error) {
-    console.error('Error fetching emotes:', error);
-    return [];
-  }
+  });
+  return images;
 }
 
-function getRandomEmote(emotes) {
-  const randomIndex = Math.floor(Math.random() * emotes.length);
-  return emotes[randomIndex];
-}
-
-async function main() {
-  const emotes = await fetch7TVGlobalEmotes();
-  if (emotes.length > 0) {
-    const randomEmote = getRandomEmote(emotes);
-    const emoteImageUrl = randomEmote.data.host.url + '/3x.webp';
-    document.getElementById('randomEmote').src = emoteImageUrl;
+// Function: Randomly pick an emote image and update the carousel element.
+function loadCarouselEmote() {
+  const allEmoteImgs = getAllEmoteImages();
+  if (allEmoteImgs.length > 0) {
+    const randomIndex = Math.floor(Math.random() * allEmoteImgs.length);
+    const randomEmoteImg = allEmoteImgs[randomIndex];
+    // Update the carousel image element (with id "randomEmote")
+    const carouselElement = document.getElementById('randomEmote');
+    if (carouselElement) {
+      carouselElement.src = randomEmoteImg.src;
+      carouselElement.alt = randomEmoteImg.alt;
+    }
   } else {
-    console.log('No emotes found.');
+    console.log('No emote images found for the carousel.');
   }
 }
+
+// On DOMContentLoaded, set a funny loading image before updating the carousel.
+document.addEventListener('DOMContentLoaded', () => {
+  const carouselElement = document.getElementById('randomEmote');
+  if (carouselElement) {
+    // Set a funny loading GIF as the placeholder.
+    carouselElement.src = 'https://media1.tenor.com/m/jfmI0j5FcpAAAAAd/loading-wtf.gif';
+    carouselElement.alt = 'Loading funny emote...';
+  }
+  // After 2 seconds (2000ms), update the carousel with a random emote.
+  setTimeout(loadCarouselEmote, 2000);
+});
 
