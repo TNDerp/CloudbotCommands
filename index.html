@@ -51,7 +51,7 @@
           <div class="carousel-container">
             <div class="carousel-slide">
               <div class="slide-text"> 
-                <img id="randomEmote" src="" alt="Random Emote" />
+                <img class="randomEmote" id="randomEmote" src="" alt="Random Emote" />
               </div>
             </div>
             <div class="carousel-slide active">
@@ -192,8 +192,21 @@
         </aside>
 
         <aside class="sidebar-right">
+          <div class="sidebar-content bttv">
+            <img src="img/bttv.png" alt="BTTV Logo" class="sidebar-logo">
+            <h2>BTTV Emotes</h2>
+            <button class="toggle-more" data-target="#bttv-more-info">Show Emotes</button>
+            <div id="bttv-more-info" class="more-info"></div>
+          </div>
         </aside>
+
         <aside class="sidebar-right">
+          <div class="sidebar-content ffz">
+            <img src="img/ffz.png" alt="FFZ Logo" class="sidebar-logo">
+            <h2>FFZ Emotes</h2>
+            <button class="toggle-more" data-target="#ffz-more-info">Show Emotes</button>
+            <div id="ffz-more-info" class="more-info"></div>
+          </div>
         </aside>
       </div>
     </div>
@@ -204,3 +217,4 @@
   <script type="module" src="main.js"></script>
 </body>
 </html>
+

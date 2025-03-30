@@ -142,6 +142,79 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+function loadBttvEmotes() {
+  const channelId = '1242263396'; // Replace with your Twitch channel ID
+  const apiEndpoint = `https://api.betterttv.net/3/cached/users/twitch/${channelId}`;
+  const container = document.getElementById('bttv-more-info');
+
+  container.innerHTML = '';
+
+  fetch(apiEndpoint)
+    .then(response => response.json())
+    .then(data => {
+      // BTTV returns two arrays: channelEmotes and sharedEmotes
+      console.log(data)
+      const channelEmotes = data.channelEmotes || [];
+      const sharedEmotes = data.sharedEmotes || [];
+      const allEmotes = [...channelEmotes, ...sharedEmotes];
+
+      allEmotes.forEach(emote => {
+        const img = document.createElement('img');
+        // Construct URL using BTTV CDN – size options: 1x, 2x, 3x.
+        img.src = `https://cdn.betterttv.net/emote/${emote.id}/3x`;
+        img.alt = emote.code;
+        img.classList.add("emote-gif");
+        container.appendChild(img);
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching BTTV emotes:', error);
+      container.innerHTML = '<p>Failed to load BTTV emotes.</p>';
+    });
+}
+
+document.addEventListener('DOMContentLoaded', loadBttvEmotes);
+
+
+function loadFfzEmotes() {
+  const channelName = 'tnderp'; // Replace with your FFZ channel name
+  const apiEndpoint = `https://api.frankerfacez.com/v1/room/${channelName}`;
+  const container = document.getElementById('ffz-more-info');
+
+  container.innerHTML = '';
+
+  fetch(apiEndpoint)
+    .then(response => response.json())
+    .then(data => {
+      // Collect all emotes from every set
+      let allEmotes = [];
+      const sets = data.sets || {};
+      for (const set in sets) {
+        if (sets.hasOwnProperty(set)) {
+          allEmotes = allEmotes.concat(sets[set].emoticons);
+        }
+      }
+      allEmotes.forEach(emote => {
+        const img = document.createElement('img');
+        // Each emote provides URLs at different sizes in the "urls" object.
+        // Use the highest quality available (typically key "4" or fallback to "1")
+        const sizeKey = emote.urls["4"] ? "4" : (emote.urls["2"] ? "2" : "1");
+        // Construct the URL using FFZ CDN: https://cdn.frankerfacez.com/emote/{emoteID}/{size}
+        img.src = `https://cdn.frankerfacez.com/emote/${emote.id}/${sizeKey}`;
+        img.alt = emote.name;
+        img.classList.add("emote-gif");
+        container.appendChild(img);
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching FFZ emotes:', error);
+      container.innerHTML = '<p>Failed to load FFZ emotes.</p>';
+    });
+}
+
+document.addEventListener('DOMContentLoaded', loadFfzEmotes);
+
+//Randomizer for emotes
 document.addEventListener('DOMContentLoaded', () => {
   main();
 });

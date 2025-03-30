@@ -88,6 +88,10 @@ header h1 {
   color: #fff;
 }
 
+.randomEmote{
+  max-width: 80px;
+}
+
 /* Page Layout */
 .page-wrapper {
   display: flex;
@@ -126,6 +130,7 @@ header h1 {
 }
 .sidebar-logo {
   max-width: 200px;
+  width: 200px;
   height: auto;
   border-radius: 8px;
   margin-bottom: 15px;
