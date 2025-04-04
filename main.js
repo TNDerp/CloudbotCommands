@@ -72,64 +72,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 7TV Emotes
 function loadSevenTvEmotes() {
-  const userId = '01JMSRACAHM75E9497ZW05CC8B';
-  const apiEndpoint = 'https://7tv.io/v3/gql';
+  const userId = '1242263396'; // Replace with the appropriate user ID
+  const apiEndpoint = `https://7tv.io/v3/users/twitch/${userId}`;
   const container = document.getElementById('seventv-more-info');
   container.innerHTML = '';
 
-  const query = `
-    query GetUserEmotes($id: ID!) {
-      user(id: $id) {
-        id
-        emote_sets {
-          id
-          emotes {
-            id
-            name
-          }
-        }
-      }
-    }
-  `;
-  const variables = { id: userId };
-
-  fetch(apiEndpoint, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query, variables }),
-  })
+  fetch(apiEndpoint)
     .then(response => response.json())
     .then(data => {
-      if (data.errors) {
-        console.error('GraphQL errors:', data.errors);
-        container.innerHTML = '<p>Failed to load 7TV emotes.</p>';
-        return;
-      }
-      const emoteSets = data.data.user.emote_sets;
-      const allEmotes = [];
-      emoteSets.forEach(set => {
-        if (Array.isArray(set.emotes)) {
-          allEmotes.push(...set.emotes);
-        }
-      });
-      allEmotes.forEach(emote => {
-        let imageUrl = '';
-        if (emote.files && emote.files.length > 0) {
-          const file4x = emote.files.find(file => file.quality === '4x');
-          imageUrl = file4x ? file4x.url : emote.files[0].url;
-        } else {
-          imageUrl = `https://cdn.7tv.app/emote/${emote.id}/4x.avif`;
-        }
-        const img = document.createElement('img');
-        img.src = imageUrl;
-        img.alt = emote.name;
-        img.classList.add("emote-gif");
-        container.appendChild(img);
-      });
+      const emoteSetId = data.emote_set.id;
+      const emoteApiEndpoint = `https://7tv.io/v3/emote-sets/${emoteSetId}`;
+
+      fetch(emoteApiEndpoint)
+        .then(response => response.json())
+        .then(emoteData => {
+          const emotes = emoteData.emotes || [];
+          emotes.forEach(emote => {
+            const img = document.createElement('img');
+            img.src = `https://cdn.7tv.app/emote/${emote.id}/3x.webp`;
+            img.alt = emote.name;
+            img.classList.add("emote-gif");
+            container.appendChild(img);
+          });
+        })
+        .catch(error => {
+          console.error('Error fetching 7TV emotes:', error);
+          container.innerHTML = '<p>Failed to load 7TV emotes.</p>';
+        });
     })
     .catch(error => {
-      console.error('Error fetching 7TV emotes:', error);
-      container.innerHTML = '<p>Failed to load 7TV emotes.</p>';
+      console.error('Error fetching 7TV user data:', error);
+      container.innerHTML = '<p>Failed to load 7TV user data.</p>';
     });
 }
 
