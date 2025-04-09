@@ -72,41 +72,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 7TV Emotes
 function loadSevenTvEmotes() {
-  const userId = '1242263396'; // Replace with the appropriate user ID
-  const apiEndpoint = `https://7tv.io/v3/users/twitch/${userId}`;
+  const emoteSetId = '01JMSSMTVR5HHDB0A526HVDTST';
+  const apiEndpoint = `https://7tv.io/v3/emote-sets/${emoteSetId}`;
   const container = document.getElementById('seventv-more-info');
   container.innerHTML = '';
 
   fetch(apiEndpoint)
-    .then(response => response.json())
-    .then(data => {
-      const emoteSetId = data.emote_set.id;
-      const emoteApiEndpoint = `https://7tv.io/v3/emote-sets/${emoteSetId}`;
-
-      fetch(emoteApiEndpoint)
-        .then(response => response.json())
-        .then(emoteData => {
-          const emotes = emoteData.emotes || [];
-          emotes.forEach(emote => {
-            const img = document.createElement('img');
-            img.src = `https://cdn.7tv.app/emote/${emote.id}/3x.webp`;
-            img.alt = emote.name;
-            img.classList.add("emote-gif");
-            container.appendChild(img);
-          });
-        })
-        .catch(error => {
-          console.error('Error fetching 7TV emotes:', error);
-          container.innerHTML = '<p>Failed to load 7TV emotes.</p>';
-        });
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(emoteData => {
+      const emotes = emoteData.emotes || [];
+      emotes.forEach(emote => {
+        const img = document.createElement('img');
+        img.src = `https://cdn.7tv.app/emote/${emote.id}/3x.webp`;
+        img.alt = emote.name;
+        img.classList.add("emote-gif");
+        container.appendChild(img);
+      });
     })
     .catch(error => {
-      console.error('Error fetching 7TV user data:', error);
-      container.innerHTML = '<p>Failed to load 7TV user data.</p>';
+      console.error('Error fetching 7TV emote set:', error);
+      container.innerHTML = '<p>Failed to load 7TV emotes.</p>';
     });
 }
 
 document.addEventListener('DOMContentLoaded', loadSevenTvEmotes);
+
 
 // BTTV Emotes
 function loadBttvEmotes() {
