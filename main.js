@@ -69,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
 // 7TV Emotes
 function loadSevenTvEmotes() {
   const emoteSetId = '01JMSSMTVR5HHDB0A526HVDTST';
@@ -77,7 +76,7 @@ function loadSevenTvEmotes() {
   const container = document.getElementById('seventv-more-info');
   container.innerHTML = '';
 
-  fetch(apiEndpoint)
+  fetch(apiEndpoint, { cache: 'force-cache' })
     .then(response => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -91,6 +90,7 @@ function loadSevenTvEmotes() {
         img.src = `https://cdn.7tv.app/emote/${emote.id}/3x.webp`;
         img.alt = emote.name;
         img.classList.add("emote-gif");
+        img.loading = "lazy";
         container.appendChild(img);
       });
     })
@@ -121,6 +121,7 @@ function loadBttvEmotes() {
         img.src = `https://cdn.betterttv.net/emote/${emote.id}/3x`;
         img.alt = emote.code;
         img.classList.add("emote-gif");
+        img.loading = "lazy";
         container.appendChild(img);
       });
     })
@@ -132,6 +133,7 @@ function loadBttvEmotes() {
 
 document.addEventListener('DOMContentLoaded', loadBttvEmotes);
 
+
 // FFZ Emotes
 function loadFfzEmotes() {
   const channelName = 'tnderp';
@@ -139,7 +141,7 @@ function loadFfzEmotes() {
   const container = document.getElementById('ffz-more-info');
   container.innerHTML = '';
 
-  fetch(apiEndpoint)
+  fetch(apiEndpoint, { cache: 'force-cache' })
     .then(response => response.json())
     .then(data => {
       let allEmotes = [];
@@ -155,6 +157,7 @@ function loadFfzEmotes() {
         img.src = `https://cdn.frankerfacez.com/emote/${emote.id}/${sizeKey}`;
         img.alt = emote.name;
         img.classList.add("emote-gif");
+        img.loading = "lazy";
         container.appendChild(img);
       });
     })
@@ -165,6 +168,7 @@ function loadFfzEmotes() {
 }
 
 document.addEventListener('DOMContentLoaded', loadFfzEmotes);
+
 
 
 
