@@ -232,6 +232,34 @@ footer {
   color: #777;
 }
 
+#consent-banner {
+  position: fixed;      
+  top: 10px;            
+  right: 10px;          
+  max-width: 300px;     
+  background-color: #fff;  
+  border: 1px solid #ddd;  
+  border-radius: 5px;  
+  padding: 10px;          
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2); 
+  font-size: 0.85rem;    
+  z-index: 1000;          
+}
+
+
+#consent-banner p {
+  margin: 0 0 5px 0;       
+  line-height: 1.2;       
+}
+
+
+#consent-banner button {
+  margin-right: 5px;      
+  font-size: 0.85rem;     
+  padding: 5px 10px;       
+  cursor: pointer;
+}
+
 /* Responsive Styles */
 @media (max-width: 600px) {
   header h1 {
