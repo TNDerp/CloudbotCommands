@@ -1,0 +1,80 @@
+#donut {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #0f0;
+    background-color: #000;
+    font-family: monospace;
+  }
+  
+  #donut-btn {
+    margin: 20px auto;
+    display: block;            
+    padding: 12px 24px;
+    font-size: 16px;
+    color: #0f0;                
+    background: transparent;
+    border: 2px solid #0f0;    
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;          
+    transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+  }
+  
+  
+  #donut-btn:hover {
+    background: #0f0;
+    color: #000;
+    box-shadow: 0 0 10px #0f0, 0 0 20px #0f0, 0 0 30px #0f0;
+    animation: pulse 1.5s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(15, 255, 15, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 12px rgba(15, 255, 15, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(15, 255, 15, 0);
+    }
+  }
+  
+  /* Shine effect pseudo-element */
+  #donut-btn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(15,255,15,0.4) 50%, rgba(255,255,255,0) 100%);
+    transform: skewX(-20deg);  
+    opacity: 0;
+    animation: shine 15s infinite;
+  }
+  
+  /* Keyframes for shine effect */
+  @keyframes shine {
+    0% {
+      left: -150%;
+      opacity: 0;
+    }
+    5% {
+      opacity: 1;
+    }
+    15% {
+      left: 150%;  
+      opacity: 1;
+    }
+    20% {
+      opacity: 0;
+    }
+    100% {
+      left: 150%;
+      opacity: 0;
+    }
+  }
